@@ -64,7 +64,8 @@ class ModelHandler(BaseHandler):
         self.manifest = context.manifest
 
         # load model
-        model_pt_path = "/home/ubuntu/murata/Server/srganserve/serve/srgan/SRGAN_DIV2K.pth"  # generator weight
+        # model_pt_path = "/home/ubuntu/murata/Server/srganserve/serve/srgan/SRGAN_DIV2K.pth"  # generator weight
+        model_pt_path = "/Users/tatsuro/Documents/Media2CloudTutorial/Server/srganserve/serve/examples/srganserve/SRGAN_DIV2K.pth"
         self.model = Generator()
         self.model.load_state_dict(torch.load(model_pt_path, map_location=torch.device("cpu")))
         self.model.to(self.device)
@@ -127,12 +128,14 @@ class ModelHandler(BaseHandler):
         """
         postprocess_output = inference_output
         # convert results into json format
-        file_name = "/home/ubuntu/murata/Server/srganserve/serve/image_dir/{}".format(self.image_filename)
+        # file_name = "/home/ubuntu/murata/Server/srganserve/serve/image_dir/{}".format(self.image_filename)
+        file_name = "/Users/tatsuro/Documents/Media2CloudTutorial/Server/srganserve/serve/image_dir/{}".format(self.image_filename)
         save_image(postprocess_output, file_name)
 
         
         # s3 upload
-        json_format = self.upload_file(file_name, self.bucket, object_name=None)
+        # json_format = self.upload_file(file_name, self.bucket, object_name=None)
+        json_format = {"url": "https://github.com"}
 
         return json_format
 
